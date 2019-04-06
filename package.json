@@ -29,10 +29,9 @@
         "helmet": "^3.16.0",
         "jsonwebtoken": "^8.5.1",
         "knex": "^0.16.3",
-        "logform": "^2.1.2",
+        "log4js": "^4.1.0",
         "mysql": "^2.16.0",
-        "promise-mysql": "^3.3.1",
-        "winston": "^3.2.1"
+        "promise-mysql": "^3.3.1"
     },
     "devDependencies": {
         "@types/bluebird": "^3.5.26",
@@ -44,6 +43,7 @@
         "@types/jest": "^24.0.11",
         "@types/jsonwebtoken": "^8.3.2",
         "@types/knex": "^0.16.1",
+        "@types/log4js": "^2.3.5",
         "@types/mysql": "^2.15.5",
         "@types/node": "^11.13.0",
         "jest": "^24.7.1",
