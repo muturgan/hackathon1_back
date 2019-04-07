@@ -56,7 +56,7 @@ export class LoginRoute {
                     });
 
                 } catch (error) {
-                    logger.error(`login failed for ${req.body.login}`, error);
+                    logger.error(`login failed`, error);
                     return res.status(500).send({
                         success: false,
                         message: 'Внутренняя ошибка сервера',

@@ -1,4 +1,4 @@
-import { request, RequestOptions } from 'http';
+import { request, RequestOptions } from 'https';
 import { userDataType } from '../types/customTypes';
 
 
@@ -9,7 +9,8 @@ export const getUserData = (yatoken: string): Promise<{
 
     return new Promise((resolve, reject) => {
         const options: RequestOptions = {
-            hostname: 'login.yandex.ru/info?format=json',
+            hostname: 'login.yandex.ru',
+            path: '/info?format=json',
             method: 'GET',
             headers: {
                 Authorization: `OAuth ${yatoken}`,
