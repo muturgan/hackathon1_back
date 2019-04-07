@@ -33,6 +33,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+/coverage
 
 # System Files
 .DS_Store
@@ -45,4 +46,5 @@ desktop.ini
 
 
 .env
+env.json
 knexfile.js
