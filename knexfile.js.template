@@ -1,0 +1,17 @@
+const config = {
+    client: string,
+    connection: {
+        host: string,
+        port: string,
+        user: string,
+        password: string,
+        database: string,
+        timezone: string,
+    },
+    pool: {
+        min: number,
+        max: number,
+    },
+};
+
+module.exports = config;
