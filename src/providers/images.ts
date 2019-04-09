@@ -11,7 +11,7 @@ type getImagesOptions = {
 
 const defaultOptions: getImagesOptions = {
     sortBy: 'id',
-    direction: 'desc',
+    direction: 'asc',
     limit: 80,
     offset: 0,
 };
