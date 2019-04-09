@@ -60,7 +60,6 @@ export class LoginRoute {
                     return res.status(500).send({
                         success: false,
                         message: 'Внутренняя ошибка сервера',
-                        error,
                     });
                 }
             }
