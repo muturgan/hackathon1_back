@@ -24,6 +24,28 @@ export type userDataType = {
     readonly id: string,
 };
 
+
+export type unparsedImageType = {
+    readonly id: number,
+    readonly name: string,
+    readonly path: string,
+    readonly preview: string,
+    readonly tags: string,
+    readonly likedUsers: string,
+    readonly likes: number,
+};
+
+
+export type imageType = {
+    readonly id: number,
+    readonly name: string,
+    readonly path: string,
+    readonly preview: string,
+    readonly tags: ReadonlyArray<string>,
+    readonly likedUsers: ReadonlyArray<string>,
+    readonly likes: number,
+};
+
 export type userType = {
     id: number,
     login: string,
