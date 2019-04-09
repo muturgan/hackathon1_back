@@ -1,5 +1,6 @@
 import { request, RequestOptions } from 'https';
-import {knex} from '../services/db-driver';
+import { knex } from '../services/db-driver';
+import { env } from '../configs/enviroment';
 
 
 
@@ -11,7 +12,7 @@ const getData = (): Promise<any> => {
             path: '/v1/disk/resources?path=hackassets&limit=100',
             method: 'GET',
             headers: {
-                Authorization: `OAuth AQAEA7qiS2gyAAWYSZBhcSnGs09ZvmKid5aEmPk`,
+                Authorization: `OAuth ${env.YA_DISK_AUTH_KEY}`,
                 ['Content-Type']: 'application/json',
             },
         };

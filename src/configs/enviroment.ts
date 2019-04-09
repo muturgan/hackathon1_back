@@ -15,6 +15,7 @@ export const env: {
     readonly DB_TIMEZONE: string,
 
     readonly SECRET: string,
+    readonly YA_DISK_AUTH_KEY: string,
 
         } = {
             ...envjson,
