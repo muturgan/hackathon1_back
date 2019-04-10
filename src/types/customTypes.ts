@@ -28,11 +28,15 @@ export type userDataType = {
 export type unparsedImageType = {
     readonly id: number,
     readonly name: string,
-    readonly path: string,
-    readonly preview: string,
     readonly tags: string,
     readonly likedUsers: string,
     readonly likes: number,
+};
+
+
+export type tagType = {
+    readonly value: string,
+    readonly title: string,
 };
 
 
@@ -40,27 +44,26 @@ export type imageType = {
     readonly id: number,
     readonly name: string,
     readonly path: string,
-    readonly preview: string,
-    readonly tags: ReadonlyArray<string>,
+    readonly tags: ReadonlyArray<tagType>,
     readonly likedUsers: ReadonlyArray<string>,
     readonly likes: number,
 };
 
-export type userType = {
-    id: number,
-    login: string,
-    password: null,
-    email: string,
-    phone: string,
-    fullname?: string,
-    birthday?: string,
-    index?: string,
-    city?: string,
-    street?: string,
-    building?: string,
-    permissions: number,
-    comment?: string,
-    status: string,
-    updatingDate?: string,
-    creationDate: string,
+
+export type yaDiskType = {
+    readonly _embedded: {
+        readonly items: ReadonlyArray<{
+            readonly name: string,
+            readonly file: string,
+            readonly preview: string,
+        }>,
+    },
+};
+
+
+export type normallizedYaDiskData = {
+    [key: string]: {
+        readonly src: string,
+        readonly thumbnail: string,
+    }
 };

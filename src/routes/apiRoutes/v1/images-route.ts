@@ -11,7 +11,7 @@ export class ImagesRoute {
             .get( async (req, res) => {
                 try {
 
-                    const images = await pGetManyImages();
+                    const images = await pGetManyImages(req.query);
 
                     logger.info(`images were sent to user in process id:${ process.pid }`);
                     return res.status(200).send({
@@ -34,7 +34,12 @@ export class ImagesRoute {
             .get( async (req, res) => {
                 try {
 
-                    const image = await pGetOneImage(req.params.id);
+                    const image = await pGetOneImage(+req.params.id);
+
+                    if (!image) {
+                        logger.info(`there is no image id:${req.params.id} in a db (process id:${ process.pid })`);
+                        return res.sendStatus(404);
+                    }
 
                     logger.info(`image id:${req.params.id} was sent to user in process id:${ process.pid }`);
                     return res.status(200).send({

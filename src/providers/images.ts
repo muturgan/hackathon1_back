@@ -1,5 +1,6 @@
 import { knex } from '../services/db-driver';
 import { unparsedImageType, imageType } from '../types/customTypes';
+import { env } from '../configs/enviroment';
 
 
 type getImagesOptions = {
@@ -9,7 +10,7 @@ type getImagesOptions = {
     offset?: number,
 };
 
-const defaultOptions: getImagesOptions = {
+const defaultOptions = {
     sortBy: 'id',
     direction: 'asc',
     limit: 80,
@@ -19,11 +20,13 @@ const defaultOptions: getImagesOptions = {
 
 function parseImages(unparsedImages: Array<unparsedImageType>): Array<imageType> {
     return unparsedImages.map(image => {
-        const {tags, likedUsers, ...rest} = image;
+        const {tags, likedUsers, name, ...rest} = image;
 
         return {
         tags: JSON.parse(tags),
         likedUsers: JSON.parse(image.likedUsers),
+        path: env.YA_DISK_PATH + name,
+        name: name.split('-')[0],
         ...rest,
         };
     });
@@ -31,12 +34,12 @@ function parseImages(unparsedImages: Array<unparsedImageType>): Array<imageType>
 
 
 
-export async function pGetManyImages(opt: getImagesOptions = defaultOptions): Promise<Array<imageType>> {
+export async function pGetManyImages(opt: getImagesOptions): Promise<Array<imageType>> {
     try {
-        const sortBy = opt.sortBy ? opt.sortBy : 'id';
-        const direction = opt.direction ? opt.direction : 'desc';
-        const limit = opt.limit ? opt.limit : 80;
-        const offset = opt.offset ? opt.offset : 0;
+        const sortBy = opt.sortBy ? opt.sortBy : defaultOptions.sortBy;
+        const direction = opt.direction ? opt.direction : defaultOptions.direction;
+        const limit = opt.limit ? +opt.limit : defaultOptions.limit;
+        const offset = opt.offset ? +opt.offset : defaultOptions.offset;
 
         const unparsedImages = await knex('images')
             .select()
@@ -50,11 +53,15 @@ export async function pGetManyImages(opt: getImagesOptions = defaultOptions): Pr
 }
 
 
-export async function pGetOneImage(id: number): Promise<imageType> {
+export async function pGetOneImage(id: number): Promise<imageType|null> {
     try {
+        if (Number.isNaN(id)) { return null; }
+
         const unparsedImages = await knex('images')
             .select()
             .where({id}) as [unparsedImageType];
+
+        if (!unparsedImages.length) { return null; }
 
         return parseImages(unparsedImages)[0];
 
