@@ -41,8 +41,9 @@ Thumbs.db
 
 /logs
 
-# omg
-desktop.ini
+# Windows
+Thumbs.db
+Desktop.ini
 
 
 .env
