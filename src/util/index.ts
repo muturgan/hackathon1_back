@@ -7,3 +7,4 @@ export * from './createNewUser';
 export * from './isEmailValid';
 export * from './setPaginationByObj';
 export * from './verify';
+export * from './parseImages';

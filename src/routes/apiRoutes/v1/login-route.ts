@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import logger from '../../../services/logger';
+import { logger } from '../../../services/logger';
 import { userDataType } from '../../../types/customTypes';
 import {
     attackerDetails,

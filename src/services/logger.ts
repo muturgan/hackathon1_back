@@ -43,4 +43,3 @@ class Logger {
 
 const LoggerI = new Logger();
 export const logger = LoggerI.app;
-export default LoggerI.app;

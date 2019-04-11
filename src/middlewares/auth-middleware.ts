@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import logger from '../services/logger';
+import { logger } from '../services/logger';
 import { knex } from '../services/db-driver';
 import { attackerDetails, verify, isEmailValid } from '../util';
 import { env } from '../configs/enviroment';

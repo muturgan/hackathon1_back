@@ -11,7 +11,7 @@ const PORT = env.PORT;
 
 
 import server from './app';
-import logger from './services/logger';
+import { logger } from './services/logger';
 
 import Domain = require('domain');
 import cluster = require('cluster');

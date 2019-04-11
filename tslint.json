@@ -39,7 +39,7 @@
     ],
     "no-arg": true,
     "no-for-in-array": true,
-    "no-bitwise": true,
+    "no-bitwise": false,
     "no-console": [
       true,
       "debug",
