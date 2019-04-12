@@ -9,6 +9,26 @@ export type sqlEditRequestType = {
     readonly changedRows: number,
 };
 
+export type knexSelectInfoType = {
+    catalog: string,
+    db: string,
+    table: string,
+    orgTable: string,
+    name: string,
+    orgName: string,
+    charsetNr: number,
+    length: number,
+    type: number,
+    flags: number,
+    decimals: number,
+    zeroFill: boolean,
+    protocol41: boolean,
+};
+
+export type knexRawSelectResponseType = [any[], knexSelectInfoType[]];
+
+export type knexRawUpdateResponseType = [sqlEditRequestType, any|null];
+
 export type userDataType = {
     readonly first_name: string,
     readonly last_name: string,
