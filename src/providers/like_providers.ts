@@ -9,7 +9,7 @@ export async function pLike(req: Request, res: Response) {
     try {
 
         if (await isVoted((req as any).email, +req.params.id)) {
-            return res.status(403).send({
+            return res.status(422).send({
                 success: false,
                 message: 'Вы уже проголосовали за это изображение',
             });
@@ -33,7 +33,7 @@ export async function pDislike(req: Request, res: Response) {
     try {
 
         if (!(await isVoted((req as any).email, +req.params.id))) {
-            return res.status(403).send({
+            return res.status(422).send({
                 success: false,
                 message: 'Вы еще не голосовали за это изображение',
             });

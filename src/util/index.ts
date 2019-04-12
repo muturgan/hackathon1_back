@@ -13,3 +13,4 @@ export * from './getNewTestPath';
 export * from './getNewImagePath';
 export * from './checkLinkActuality';
 export * from './like_funcs';
+export * from './tag_funcs';
