@@ -8,12 +8,12 @@ import { env } from '../configs/enviroment';
 
 export async function pAuttentification(req: Request, res: Response, next: NextFunction) {
     try {
-        if ( !req.headers || !req.headers['Authorization']) {
+        if ( !req.headers || !req.headers['authorization']) {
             (req as any).email = null;
             return next();
         }
 
-        const jwtToken = req.headers['Authorization'] as string;
+        const jwtToken = req.headers['authorization'] as string;
 
         const { email } = await verify(jwtToken, env.SECRET) as {email: string};
 
