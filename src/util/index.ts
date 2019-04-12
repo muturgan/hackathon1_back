@@ -12,3 +12,4 @@ export * from './parseImagesPrivate';
 export * from './getNewTestPath';
 export * from './getNewImagePath';
 export * from './checkLinkActuality';
+export * from './like_funcs';

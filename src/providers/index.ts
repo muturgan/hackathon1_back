@@ -5,3 +5,4 @@ export * from './validateQueryParas';
 export * from './updatePrivatePaths';
 export * from './autentification';
 export * from './authorisation';
+export * from './like_providers';
