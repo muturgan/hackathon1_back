@@ -33,6 +33,7 @@ export async function pAuthorisation(req: Request, res: Response, next: NextFunc
             .where({email}) as Array<{email: string}>;
 
         if (rows[0]) {
+            (req as any).email = email;
             return next();
 
         } else {
