@@ -8,7 +8,7 @@ import { env } from '../configs/enviroment';
 
 export async function pAuthorisation(req: Request, res: Response, next: NextFunction) {
     try {
-        if ( !req.headers || !req.headers['Authorization']) {
+        if ( !req.headers || !req.headers['authorization']) {
             logger.error(`unauthorized user tried to perform some action as verified`, attackerDetails(req));
             return res.status(401).send({
                 success: false,
@@ -16,7 +16,7 @@ export async function pAuthorisation(req: Request, res: Response, next: NextFunc
             });
         }
 
-        const jwtToken = req.headers['Authorization'] as string;
+        const jwtToken = req.headers['authorization'] as string;
 
         const { email } = await verify(jwtToken, env.SECRET) as {email: string};
 
@@ -24,7 +24,7 @@ export async function pAuthorisation(req: Request, res: Response, next: NextFunc
             logger.error(`user tried to pass invalid jwt token`, attackerDetails(req));
             return res.status(401).send({
                 success: false,
-                message: `Вам отказано в доступе`
+                message: `Вам отказано в доступе`,
             });
         }
 
