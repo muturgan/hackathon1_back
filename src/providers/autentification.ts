@@ -1,19 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import { logger } from '../services/logger';
 import { knex } from '../services/db-driver';
-import { attackerDetails, verify, isEmailValid } from '../util';
+import { verify, isEmailValid } from '../util';
 import { env } from '../configs/enviroment';
 
 
 
-export async function pAuth(req: Request, res: Response, next: NextFunction) {
+export async function pAuttentification(req: Request, res: Response, next: NextFunction) {
     try {
         if ( !req.headers || !req.headers['Authorization']) {
-            logger.error(`unauthorized user tried to perform some action as verified`, attackerDetails(req));
-            return res.status(401).send({
-                success: false,
-                message: 'Вам отказано в доступе',
-            });
+            (req as any).email = null;
+            return next();
         }
 
         const jwtToken = req.headers['Authorization'] as string;
@@ -21,11 +18,8 @@ export async function pAuth(req: Request, res: Response, next: NextFunction) {
         const { email } = await verify(jwtToken, env.SECRET) as {email: string};
 
         if (!email || !email.length || !isEmailValid(email)) {
-            logger.error(`user tried to pass invalid jwt token`, attackerDetails(req));
-            return res.status(401).send({
-                success: false,
-                message: `Вам отказано в доступе`
-            });
+            (req as any).email = null;
+            return next();
         }
 
         const rows = await knex('users')
@@ -33,25 +27,20 @@ export async function pAuth(req: Request, res: Response, next: NextFunction) {
             .where({email}) as Array<{email: string}>;
 
         if (rows[0]) {
+            (req as any).email = rows[0].email;
             return next();
 
         } else {
-            logger.error(`unauthorized user tried to perform some action as verified`, attackerDetails(req));
-            return res.status(401).send({
-                success: false,
-                message: 'Вам отказано в доступе',
-            });
+            (req as any).email = null;
+            return next();
         }
 
     } catch (error) {
         switch (error.message) {
             case 'invalid token':
             case 'invalid signature':
-                logger.error(error, `unauthorized user tried to perform some action as verified`, attackerDetails(req));
-                return res.status(401).send({
-                    success: false,
-                    message: 'Вам отказано в доступе',
-                });
+                (req as any).email = null;
+                return next();
 
             case 'jwt expired':
                 logger.info(`jwt expired`);
