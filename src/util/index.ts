@@ -8,3 +8,7 @@ export * from './isEmailValid';
 export * from './setPaginationByObj';
 export * from './verify';
 export * from './parseImages';
+export * from './parseImagesPrivate';
+export * from './getNewTestPath';
+export * from './getNewImagePath';
+export * from './checkLinkActuality';

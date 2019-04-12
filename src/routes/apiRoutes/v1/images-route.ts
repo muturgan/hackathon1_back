@@ -1,9 +1,10 @@
 import { Express } from 'express';
 import {
-    pGetManyImages,
-    pGetOneImage,
+    pGetManyImagesPrivate as pGetManyImages,
+    pGetOneImagePrivate as pGetOneImage,
     pValidateQueryParas,
-    pValidateId
+    pUpdatePrivatePaths,
+    pValidateId,
         } from '../../../providers';
 
 
@@ -12,11 +13,19 @@ export class ImagesRoute {
     public routes(app: Express): void {
 
         app.route('/v1/images')
-            .get( pValidateQueryParas, pGetManyImages);
+            .get(
+                pValidateQueryParas,
+                pUpdatePrivatePaths,
+                pGetManyImages,
+            );
 
 
         app.route('/v1/images/:id')
-            .get( pValidateId, pGetOneImage);
+            .get(
+                pValidateId,
+                pUpdatePrivatePaths,
+                pGetOneImage,
+            );
 
     }
 }

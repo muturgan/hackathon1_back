@@ -17,6 +17,8 @@ export const env: {
     readonly SECRET: string,
     readonly YA_DISK_AUTH_KEY: string,
     readonly YA_DISK_PATH: string,
+    readonly TEST_PATH: string,
+    readonly IMG_PATH: string,
 
         } = {
             ...envjson,

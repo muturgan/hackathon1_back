@@ -1,28 +1,21 @@
 import { request, RequestOptions } from 'https';
-import { userDataType } from '../types/customTypes';
+import { env } from '../configs/enviroment';
 
 
-export const getUserData = (yatoken: string): Promise<{
-    authorized: boolean,
-    userData?: userDataType,
-}> => {
 
+export const getNewImagePath = (imgName: string): Promise<{name: string, newPath: string}> => {
     return new Promise((resolve, reject) => {
         const options: RequestOptions = {
-            hostname: 'login.yandex.ru',
-            path: '/info?format=json',
+            hostname: 'cloud-api.yandex.net',
+            path: env.IMG_PATH + imgName,
             method: 'GET',
             headers: {
-                Authorization: `OAuth ${yatoken}`,
+                Authorization: `OAuth ${env.YA_DISK_AUTH_KEY}`,
                 ['Content-Type']: 'application/json',
             },
         };
 
         const req = request(options, res => {
-            if (res.statusCode === 401) {
-                return resolve({authorized: false});
-            }
-
             if (res.statusCode !== 200) {
                 return reject(res.statusMessage);
             }
@@ -35,10 +28,14 @@ export const getUserData = (yatoken: string): Promise<{
 
             res.on('end', () => {
                 try {
-                    const data: userDataType = JSON.parse( (arr as any as Buffer).toString('utf8') );
+                    const data: {
+                        file: string,
+                        [key: string]: any,
+
+                    } = JSON.parse( (arr as any as Buffer).toString('utf8') );
                     resolve({
-                        authorized: true,
-                        userData: data,
+                        name: imgName,
+                        newPath: data.file,
                     });
 
                 } catch (err) { throw err; }

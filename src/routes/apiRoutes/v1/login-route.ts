@@ -14,6 +14,8 @@ export class LoginRoute {
 
     public routes(app: Express): void {
 
+        app.route('/v1/test').get((req, res) => {res.status(200).send('fuck yeah!'); });
+
         app.route('/v1/login')
             .post( async (req, res) => {
                 try {

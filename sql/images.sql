@@ -1,7 +1,8 @@
 CREATE TABLE `images`
 (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
-	`name` TEXT NOT NULL,
+	`name` VARCHAR(255) NOT NULL UNIQUE,
+	`privatePath` TEXT,
 	`tags` JSON,
 	`likedUsers` JSON,
 	`likes` INT UNSIGNED DEFAULT 0

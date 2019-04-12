@@ -10,6 +10,7 @@ export const attackerDetails = (req: Request) => {
         query: req.query,
         method: req.method,
         hostname: req.hostname,
+        path: req.path,
         ip: req.ip,
         originalUrl: req.originalUrl,
         fresh: req.fresh,

@@ -34,6 +34,16 @@ export type unparsedImageType = {
 };
 
 
+export type unparsedImagePrivateType = {
+    readonly id: number,
+    readonly name: string,
+    readonly tags: string,
+    readonly likedUsers: string,
+    readonly likes: number,
+    readonly privatePath: string,
+};
+
+
 export type tagType = {
     readonly value: string,
     readonly title: string,
