@@ -27,7 +27,7 @@ export async function pGetManyImagesPublic(req: Request, res: Response) {
             .limit(limit)
             .offset(offset) as Array<unparsedImageType>;
 
-        const images = await parseImages(unparsedImages);
+        const images = await parseImages(unparsedImages, (req as any).email);
 
         logger.info(`images were sent to user in process id:${ process.pid }`);
         return res.status(200).send({
@@ -58,7 +58,7 @@ export async function pGetManyImagesPrivate(req: Request, res: Response) {
             .limit(limit)
             .offset(offset) as Array<unparsedImagePrivateType>;
 
-        const images = await parseImagesPrivate(unparsedImages);
+        const images = await parseImagesPrivate(unparsedImages, (req as any).email);
 
         logger.info(`images were sent to user in process id:${ process.pid }`);
         return res.status(200).send({

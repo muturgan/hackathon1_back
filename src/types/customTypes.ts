@@ -55,7 +55,7 @@ export type imageType = {
     readonly name: string,
     readonly path: string,
     readonly tags: ReadonlyArray<tagType>,
-    readonly likedUsers: ReadonlyArray<string>,
+    readonly likedByYou: boolean,
     readonly likes: number,
 };
 

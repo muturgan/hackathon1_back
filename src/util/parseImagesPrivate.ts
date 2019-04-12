@@ -1,13 +1,15 @@
 import { unparsedImagePrivateType, imageType } from '../types/customTypes';
+import { parseTags } from './parseTags';
+import { parseLikedUsers } from './parseLikedUsers';
 
 
-export function parseImagesPrivate(unparsedImages: Array<unparsedImagePrivateType>): Array<imageType> {
+export function parseImagesPrivate(unparsedImages: Array<unparsedImagePrivateType>, email: string|null): Array<imageType> {
     return unparsedImages.map(image => {
         const {tags, likedUsers, name, privatePath, ...rest} = image;
 
         return {
-            tags: JSON.parse(tags),
-            likedUsers: JSON.parse(image.likedUsers),
+            tags: parseTags(tags),
+            likedByYou: parseLikedUsers(image.likedUsers, email),
             path: privatePath,
             name: name.split('-')[0],
             ...rest,

@@ -18,7 +18,7 @@ export async function pGetOneImagePublic(req: Request, res: Response) {
 
         if (!unparsedImages.length) { return res.sendStatus(404); }
 
-        const image = await parseImages(unparsedImages)[0];
+        const image = await parseImages(unparsedImages, (req as any).email)[0];
 
         if (!image) {
             logger.info(`there is no image id:${req.params.id} in a db (process id:${ process.pid })`);
@@ -53,7 +53,7 @@ export async function pGetOneImagePrivate(req: Request, res: Response) {
 
         if (!unparsedImages.length) { return res.sendStatus(404); }
 
-        const image = await parseImagesPrivate(unparsedImages)[0];
+        const image = await parseImagesPrivate(unparsedImages, (req as any).email)[0];
 
         if (!image) {
             logger.info(`there is no image id:${req.params.id} in a db (process id:${ process.pid })`);

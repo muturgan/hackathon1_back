@@ -5,6 +5,7 @@ import {
     pValidateQueryParas,
     pUpdatePrivatePaths,
     pValidateId,
+    pAuttentification
         } from '../../../providers';
 
 
@@ -15,6 +16,7 @@ export class ImagesRoute {
         app.route('/v1/images')
             .get(
                 pValidateQueryParas,
+                pAuttentification,
                 pUpdatePrivatePaths,
                 pGetManyImages,
             );
@@ -23,6 +25,7 @@ export class ImagesRoute {
         app.route('/v1/images/:id')
             .get(
                 pValidateId,
+                pAuttentification,
                 pUpdatePrivatePaths,
                 pGetOneImage,
             );
