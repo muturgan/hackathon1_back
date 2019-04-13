@@ -10,7 +10,7 @@ const defaultOptions = {
     sortBy: 'id',
     direction: 'asc',
     limit: 80,
-    offset: 0,
+    page: 1,
 };
 
 
@@ -19,20 +19,26 @@ export async function pGetManyImagesPublic(req: Request, res: Response) {
         const sortBy = req.query.sortBy ? req.query.sortBy : defaultOptions.sortBy;
         const direction = req.query.direction ? req.query.direction : defaultOptions.direction;
         const limit = req.query.limit ? +req.query.limit : defaultOptions.limit;
-        const offset = req.query.offset ? +req.query.offset : defaultOptions.offset;
+        const offset = req.query.page ? ((+req.query.page - 1) * limit) : (defaultOptions.page - 1) * limit;
 
-        const unparsedImages = await knex('images')
-            .select('id', 'name', 'tags', 'likes', 'likedUsers')
-            .orderBy(sortBy, direction)
-            .limit(limit)
-            .offset(offset) as Array<unparsedImageType>;
+        const result = await Promise.all([
+            knex('images').count('id as count') as PromiseLike<[{count: number}]>,
+            knex('images')
+                .select('id', 'name', 'tags', 'likes', 'likedUsers')
+                .orderBy(sortBy, direction)
+                .limit(limit)
+                .offset(offset) as PromiseLike<Array<unparsedImageType>>,
+        ]);
 
-        const images = await parseImages(unparsedImages, (req as any).email);
+        const pages = Math.ceil(result[0][0].count / limit);
+
+        const images = await parseImages(result[1], (req as any).email);
 
         logger.info(`images were sent to user in process id:${ process.pid }`);
         return res.status(200).send({
             succsess: true,
             images,
+            pages,
         });
 
     } catch (err) {
@@ -50,20 +56,26 @@ export async function pGetManyImagesPrivate(req: Request, res: Response) {
         const sortBy = req.query.sortBy ? req.query.sortBy : defaultOptions.sortBy;
         const direction = req.query.direction ? req.query.direction : defaultOptions.direction;
         const limit = req.query.limit ? +req.query.limit : defaultOptions.limit;
-        const offset = req.query.offset ? +req.query.offset : defaultOptions.offset;
+        const offset = req.query.page ? ((+req.query.page - 1) * limit) : (defaultOptions.page - 1) * limit;
 
-        const unparsedImages = await knex('images')
-            .select()
-            .orderBy(sortBy, direction)
-            .limit(limit)
-            .offset(offset) as Array<unparsedImagePrivateType>;
+        const result = await Promise.all([
+            knex('images').count('id as count') as PromiseLike<[{count: number}]>,
+            knex('images')
+                .select()
+                .orderBy(sortBy, direction)
+                .limit(limit)
+                .offset(offset) as PromiseLike<Array<unparsedImagePrivateType>>,
+        ]);
 
-        const images = await parseImagesPrivate(unparsedImages, (req as any).email);
+        const pages = Math.ceil(result[0][0].count / limit);
+
+        const images = await parseImagesPrivate(result[1], (req as any).email);
 
         logger.info(`images were sent to user in process id:${ process.pid }`);
         return res.status(200).send({
             succsess: true,
             images,
+            pages,
         });
 
     } catch (err) {

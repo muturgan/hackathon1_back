@@ -41,8 +41,8 @@ export function pValidateQueryParas(req: Request, res: Response, next: NextFunct
     }
 
     if ('offset' in req.query) {
-        if (!Number.isInteger(+req.query.offset)) {
-                return throwRes(res, 'Параметр запроса offset должен быть целым числом');
+        if (!Number.isInteger(+req.query.page)) {
+                return throwRes(res, 'Параметр запроса page должен быть целым числом');
             }
     }
 
