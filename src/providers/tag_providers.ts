@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { logger } from '../services/logger';
+import { knex } from '../services/db-driver';
 import { isTaged, addTag, deleteTag } from '../util';
 
 
@@ -72,6 +73,43 @@ export async function pDeleteTag(req: Request, res: Response) {
             success: false,
             code: 500,
             message: 'Внутренняя ошибка сервера',
+        });
+    }
+}
+
+
+
+export async function pGetTags(req: Request, res: Response) {
+    try {
+
+        const rows = await knex('images')
+            .select('tags')
+            .where(knex.raw('JSON_LENGTH(tags) > 0')) as Array<{tags: string}>;
+
+        const tagObj: {[key: string]: string} = {};
+
+        rows.forEach(item => {
+            (JSON.parse(item.tags) as Array<string>)
+                .forEach(tag => {
+                    tagObj[tag] = tag;
+                }
+            );
+        });
+
+        logger.info(`unique tags were sent to client in process id:${ process.pid }`);
+        return res.status(200).send({
+            succsess: true,
+            code: 200,
+            tags: Object.keys(tagObj),
+        });
+
+    } catch (err) {
+        logger.error(`error on unique tags sending in process id:${ process.pid }`, err);
+        return res.status(500).send({
+            success: false,
+            code: 500,
+            message: 'Внутренняя ошибка сервера',
+            err,
         });
     }
 }

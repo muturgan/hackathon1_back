@@ -4,6 +4,7 @@ import {
     pDeleteTag,
     pValidateId,
     pAuthorisation,
+    pGetTags
         } from '../../../providers';
 
 
@@ -25,6 +26,10 @@ export class TagRoute {
                 pAuthorisation,
                 pDeleteTag,
             );
+
+
+        app.route('/v1/tags')
+            .get(pGetTags);
 
     }
 }
