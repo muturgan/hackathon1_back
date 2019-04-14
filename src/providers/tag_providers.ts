@@ -25,7 +25,10 @@ export async function pAddTag(req: Request, res: Response) {
 
         await addTag(req.body.tag, req.params.id);
 
-        return res.sendStatus(200);
+        return res.status(200).send({
+            success: true,
+            code: 200,
+        });
 
     } catch (err) {
         logger.error(`error on tag adding in process id:${ process.pid }`, err);
@@ -58,7 +61,10 @@ export async function pDeleteTag(req: Request, res: Response) {
 
         await deleteTag(req.body.tag, req.params.id);
 
-        return res.sendStatus(200);
+        return res.status(200).send({
+            success: true,
+            code: 200,
+        });
 
     } catch (err) {
         logger.error(`error on tag deleting in process id:${ process.pid }`, err);

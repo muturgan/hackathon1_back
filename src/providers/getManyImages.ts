@@ -37,6 +37,7 @@ export async function pGetManyImagesPublic(req: Request, res: Response) {
         logger.info(`images were sent to user in process id:${ process.pid }`);
         return res.status(200).send({
             succsess: true,
+            code: 200,
             images,
             pages,
         });
@@ -75,6 +76,7 @@ export async function pGetManyImagesPrivate(req: Request, res: Response) {
         logger.info(`images were sent to user in process id:${ process.pid }`);
         return res.status(200).send({
             succsess: true,
+            code: 200,
             images,
             pages,
         });

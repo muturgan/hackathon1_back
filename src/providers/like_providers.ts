@@ -18,7 +18,10 @@ export async function pLike(req: Request, res: Response) {
 
         await like((req as any).email, +req.params.id);
 
-        return res.sendStatus(200);
+        return res.status(200).send({
+            success: true,
+            code: 200,
+        });
 
     } catch (err) {
         logger.error(`error on image likeing in process id:${ process.pid }`, err);
@@ -44,7 +47,10 @@ export async function pDislike(req: Request, res: Response) {
 
         await dislike((req as any).email, +req.params.id);
 
-        return res.sendStatus(200);
+        return res.status(200).send({
+            success: true,
+            code: 200,
+        });
 
     } catch (err) {
         logger.error(`error on image dislikeing in process id:${ process.pid }`, err);

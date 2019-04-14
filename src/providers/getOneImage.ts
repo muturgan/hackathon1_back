@@ -28,6 +28,7 @@ export async function pGetOneImagePublic(req: Request, res: Response) {
         logger.info(`image id:${req.params.id} was sent to user in process id:${ process.pid }`);
         return res.status(200).send({
             succsess: true,
+            code: 200,
             image,
         });
 
@@ -64,6 +65,7 @@ export async function pGetOneImagePrivate(req: Request, res: Response) {
         logger.info(`image id:${req.params.id} was sent to user in process id:${ process.pid }`);
         return res.status(200).send({
             succsess: true,
+            code: 200,
             image,
         });
 
