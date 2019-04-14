@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { knex } from '../services/db-driver';
+import { escape } from 'mysql';
 import { unparsedImageType, unparsedImagePrivateType } from '../types/customTypes';
 import { parseImages, parseImagesPrivate } from '../util';
 import { logger } from '../services/logger';
@@ -20,11 +21,19 @@ export async function pGetManyImagesPublic(req: Request, res: Response) {
         const direction = req.query.direction ? req.query.direction : defaultOptions.direction;
         const limit = req.query.limit ? +req.query.limit : defaultOptions.limit;
         const offset = req.query.page ? ((+req.query.page - 1) * limit) : (defaultOptions.page - 1) * limit;
+        const tag = (req.query.tag && decodeURI(req.query.tag) !== 'all') ? decodeURI(req.query.tag) : null;
 
         const result = await Promise.all([
-            knex('images').count('id as count') as PromiseLike<[{count: number}]>,
+            knex('images')
+                .count('id as count')
+                .where(tag
+                    ? knex.raw(`JSON_CONTAINS(tags, JSON_ARRAY(${escape(tag)}))`)
+                    : knex.raw(`1 = 1`)) as PromiseLike<[{count: number}]>,
             knex('images')
                 .select('id', 'name', 'tags', 'likes', 'likedUsers')
+                .where(tag
+                    ? knex.raw(`JSON_CONTAINS(tags, JSON_ARRAY(${escape(tag)}))`)
+                    : knex.raw(`1 = 1`))
                 .orderBy(sortBy, direction)
                 .limit(limit)
                 .offset(offset) as PromiseLike<Array<unparsedImageType>>,
@@ -59,11 +68,20 @@ export async function pGetManyImagesPrivate(req: Request, res: Response) {
         const direction = req.query.direction ? req.query.direction : defaultOptions.direction;
         const limit = req.query.limit ? +req.query.limit : defaultOptions.limit;
         const offset = req.query.page ? ((+req.query.page - 1) * limit) : (defaultOptions.page - 1) * limit;
+        const tag = (req.query.tag && decodeURI(req.query.tag) !== 'all') ? decodeURI(req.query.tag) : null;
+        logger.info('try tags');
 
         const result = await Promise.all([
-            knex('images').count('id as count') as PromiseLike<[{count: number}]>,
+            knex('images')
+                .count('id as count')
+                .where(tag
+                    ? knex.raw(`JSON_CONTAINS(tags, JSON_ARRAY(${escape(tag)}))`)
+                    : knex.raw(`1 = 1`)) as PromiseLike<[{count: number}]>,
             knex('images')
                 .select()
+                .where(tag
+                    ? knex.raw(`JSON_CONTAINS(tags, JSON_ARRAY(${escape(tag)}))`)
+                    : knex.raw(`1 = 1`))
                 .orderBy(sortBy, direction)
                 .limit(limit)
                 .offset(offset) as PromiseLike<Array<unparsedImagePrivateType>>,
