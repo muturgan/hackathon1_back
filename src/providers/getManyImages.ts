@@ -45,6 +45,7 @@ export async function pGetManyImagesPublic(req: Request, res: Response) {
         logger.error(`error on images sending in process id:${ process.pid }`, err);
         return res.status(500).send({
             success: false,
+            code: 500,
             message: 'Внутренняя ошибка сервера',
         });
     }
@@ -82,6 +83,7 @@ export async function pGetManyImagesPrivate(req: Request, res: Response) {
         logger.error(`error on images sending in process id:${ process.pid }`, err);
         return res.status(500).send({
             success: false,
+            code: 500,
             message: 'Внутренняя ошибка сервера',
         });
     }

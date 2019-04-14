@@ -46,6 +46,7 @@ export async function pAuttentification(req: Request, res: Response, next: NextF
                 logger.info(`jwt expired`);
                 return res.status(419).send({
                     success: false,
+                    code: 419,
                     message: 'Ваша сессия просрочена. Авторизуйтесь повторно пожалуйста.',
                 });
 
@@ -53,6 +54,7 @@ export async function pAuttentification(req: Request, res: Response, next: NextF
                 logger.error(`authorization failed`, error);
                 return res.status(500).send({
                     success: false,
+                    code: 500,
                     message: 'Внутренняя ошибка сервера',
                 });
         }

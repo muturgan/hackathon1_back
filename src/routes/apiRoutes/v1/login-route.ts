@@ -23,6 +23,7 @@ export class LoginRoute {
                         logger.info(`empty yandex token`, attackerDetails(req));
                         return res.status(449).send({
                             success: false,
+                            code: 449,
                             message: 'Вы не предоставили Яндекс oauth токен.',
                         });
                     }
@@ -33,6 +34,7 @@ export class LoginRoute {
                         logger.info(`invalid yandex token`, attackerDetails(req));
                         return res.status(401).send({
                             success: false,
+                            code: 401,
                             message: 'Вы предоставили невалидный Яндекс oauth токен.',
                         });
                     }
@@ -61,6 +63,7 @@ export class LoginRoute {
                     logger.error(`login failed`, error);
                     return res.status(500).send({
                         success: false,
+                        code: 500,
                         message: 'Внутренняя ошибка сервера',
                     });
                 }

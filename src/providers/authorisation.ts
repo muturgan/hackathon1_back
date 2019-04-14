@@ -12,6 +12,7 @@ export async function pAuthorisation(req: Request, res: Response, next: NextFunc
             logger.error(`unauthorized user tried to perform some action as verified`, attackerDetails(req));
             return res.status(401).send({
                 success: false,
+                code: 401,
                 message: 'Вам отказано в доступе',
             });
         }
@@ -24,6 +25,7 @@ export async function pAuthorisation(req: Request, res: Response, next: NextFunc
             logger.error(`user tried to pass invalid jwt token`, attackerDetails(req));
             return res.status(401).send({
                 success: false,
+                code: 401,
                 message: `Вам отказано в доступе`,
             });
         }
@@ -40,6 +42,7 @@ export async function pAuthorisation(req: Request, res: Response, next: NextFunc
             logger.error(`unauthorized user tried to perform some action as verified`, attackerDetails(req));
             return res.status(401).send({
                 success: false,
+                code: 401,
                 message: 'Вам отказано в доступе',
             });
         }
@@ -51,6 +54,7 @@ export async function pAuthorisation(req: Request, res: Response, next: NextFunc
                 logger.error(error, `unauthorized user tried to perform some action as verified`, attackerDetails(req));
                 return res.status(401).send({
                     success: false,
+                    code: 401,
                     message: 'Вам отказано в доступе',
                 });
 
@@ -58,6 +62,7 @@ export async function pAuthorisation(req: Request, res: Response, next: NextFunc
                 logger.info(`jwt expired`);
                 return res.status(419).send({
                     success: false,
+                    code: 419,
                     message: 'Ваша сессия просрочена. Авторизуйтесь повторно пожалуйста.',
                 });
 
@@ -65,6 +70,7 @@ export async function pAuthorisation(req: Request, res: Response, next: NextFunc
                 logger.error(`authorization failed`, error);
                 return res.status(500).send({
                     success: false,
+                    code: 500,
                     message: 'Внутренняя ошибка сервера',
                 });
         }

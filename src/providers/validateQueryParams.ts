@@ -7,6 +7,7 @@ function throwRes(res: Response, message: string) {
     logger.info(`invalid query params on images route in process id:${ process.pid }`);
     return res.status(422).send({
         success: false,
+        code: 422,
         message,
     });
 }

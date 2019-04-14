@@ -11,6 +11,7 @@ export async function pLike(req: Request, res: Response) {
         if (await isVoted((req as any).email, +req.params.id)) {
             return res.status(422).send({
                 success: false,
+                code: 422,
                 message: 'Вы уже проголосовали за это изображение',
             });
         }
@@ -23,6 +24,7 @@ export async function pLike(req: Request, res: Response) {
         logger.error(`error on image likeing in process id:${ process.pid }`, err);
         return res.status(500).send({
             success: false,
+            code: 500,
             message: 'Внутренняя ошибка сервера',
         });
     }
@@ -35,6 +37,7 @@ export async function pDislike(req: Request, res: Response) {
         if (!(await isVoted((req as any).email, +req.params.id))) {
             return res.status(422).send({
                 success: false,
+                code: 422,
                 message: 'Вы еще не голосовали за это изображение',
             });
         }
@@ -47,6 +50,7 @@ export async function pDislike(req: Request, res: Response) {
         logger.error(`error on image dislikeing in process id:${ process.pid }`, err);
         return res.status(500).send({
             success: false,
+            code: 500,
             message: 'Внутренняя ошибка сервера',
         });
     }

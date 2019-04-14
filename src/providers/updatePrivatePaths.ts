@@ -41,6 +41,7 @@ export async function pUpdatePrivatePaths(req: Request, res: Response, next: Nex
         logger.error(`error on image private links updating in process id:${ process.pid }`, err);
         return res.status(500).send({
             success: false,
+            code: 500,
             message: 'Внутренняя ошибка сервера',
         });
     }

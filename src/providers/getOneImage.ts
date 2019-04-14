@@ -35,6 +35,7 @@ export async function pGetOneImagePublic(req: Request, res: Response) {
         logger.error(`error on image by id sending in process id:${ process.pid }`, err);
         return res.status(500).send({
             success: false,
+            code: 500,
             message: 'Внутренняя ошибка сервера',
         });
     }
@@ -70,6 +71,7 @@ export async function pGetOneImagePrivate(req: Request, res: Response) {
         logger.error(`error on image by id sending in process id:${ process.pid }`, err);
         return res.status(500).send({
             success: false,
+            code: 500,
             message: 'Внутренняя ошибка сервера',
         });
     }
