@@ -31,12 +31,13 @@ export async function pAddTag(req: Request, res: Response) {
             code: 200,
         });
 
-    } catch (err) {
-        logger.error(`error on tag adding in process id:${ process.pid }`, err);
+    } catch (error) {
+        logger.error(`error on tag adding in process id:${ process.pid }`, error);
         return res.status(500).send({
             success: false,
             code: 500,
             message: 'Внутренняя ошибка сервера',
+            error,
         });
     }
 }
@@ -67,12 +68,13 @@ export async function pDeleteTag(req: Request, res: Response) {
             code: 200,
         });
 
-    } catch (err) {
-        logger.error(`error on tag deleting in process id:${ process.pid }`, err);
+    } catch (error) {
+        logger.error(`error on tag deleting in process id:${ process.pid }`, error);
         return res.status(500).send({
             success: false,
             code: 500,
             message: 'Внутренняя ошибка сервера',
+            error,
         });
     }
 }
@@ -103,13 +105,13 @@ export async function pGetTags(req: Request, res: Response) {
             tags: Object.keys(tagObj),
         });
 
-    } catch (err) {
-        logger.error(`error on unique tags sending in process id:${ process.pid }`, err);
+    } catch (error) {
+        logger.error(`error on unique tags sending in process id:${ process.pid }`, error);
         return res.status(500).send({
             success: false,
             code: 500,
             message: 'Внутренняя ошибка сервера',
-            err,
+            error,
         });
     }
 }

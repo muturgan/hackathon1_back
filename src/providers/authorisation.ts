@@ -72,6 +72,7 @@ export async function pAuthorisation(req: Request, res: Response, next: NextFunc
                     success: false,
                     code: 500,
                     message: 'Внутренняя ошибка сервера',
+                    error,
                 });
         }
     }

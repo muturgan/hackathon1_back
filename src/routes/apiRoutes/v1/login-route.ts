@@ -64,6 +64,7 @@ export class LoginRoute {
                         success: false,
                         code: 500,
                         message: 'Внутренняя ошибка сервера',
+                        error,
                     });
                 }
             }

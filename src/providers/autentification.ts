@@ -56,6 +56,7 @@ export async function pAuttentification(req: Request, res: Response, next: NextF
                     success: false,
                     code: 500,
                     message: 'Внутренняя ошибка сервера',
+                    error,
                 });
         }
     }

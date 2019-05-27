@@ -32,12 +32,13 @@ export async function pGetOneImagePublic(req: Request, res: Response) {
             image,
         });
 
-    } catch (err) {
-        logger.error(`error on image by id sending in process id:${ process.pid }`, err);
+    } catch (error) {
+        logger.error(`error on image by id sending in process id:${ process.pid }`, error);
         return res.status(500).send({
             success: false,
             code: 500,
             message: 'Внутренняя ошибка сервера',
+            error,
         });
     }
 }
@@ -69,12 +70,13 @@ export async function pGetOneImagePrivate(req: Request, res: Response) {
             image,
         });
 
-    } catch (err) {
-        logger.error(`error on image by id sending in process id:${ process.pid }`, err);
+    } catch (error) {
+        logger.error(`error on image by id sending in process id:${ process.pid }`, error);
         return res.status(500).send({
             success: false,
             code: 500,
             message: 'Внутренняя ошибка сервера',
+            error,
         });
     }
 }

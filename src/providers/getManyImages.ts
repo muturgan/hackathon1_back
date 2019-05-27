@@ -51,12 +51,13 @@ export async function pGetManyImagesPublic(req: Request, res: Response) {
             pages,
         });
 
-    } catch (err) {
-        logger.error(`error on images sending in process id:${ process.pid }`, err);
+    } catch (error) {
+        logger.error(`error on images sending in process id:${ process.pid }`, error);
         return res.status(500).send({
             success: false,
             code: 500,
             message: 'Внутренняя ошибка сервера',
+            error,
         });
     }
 }
@@ -99,12 +100,13 @@ export async function pGetManyImagesPrivate(req: Request, res: Response) {
             pages,
         });
 
-    } catch (err) {
-        logger.error(`error on images sending in process id:${ process.pid }`, err);
+    } catch (error) {
+        logger.error(`error on images sending in process id:${ process.pid }`, error);
         return res.status(500).send({
             success: false,
             code: 500,
             message: 'Внутренняя ошибка сервера',
+            error,
         });
     }
 }
