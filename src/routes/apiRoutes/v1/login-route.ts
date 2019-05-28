@@ -52,7 +52,7 @@ export class LoginRoute {
 
                     logger.info(`user ${userData.default_email} login in process id:${ process.pid }`);
                     return res.status(200).send({
-                        succsess: true,
+                        success: true,
                         code: 200,
                         jwtToken,
                         userData,

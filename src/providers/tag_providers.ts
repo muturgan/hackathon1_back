@@ -100,7 +100,7 @@ export async function pGetTags(req: Request, res: Response) {
 
         logger.info(`unique tags were sent to client in process id:${ process.pid }`);
         return res.status(200).send({
-            succsess: true,
+            success: true,
             code: 200,
             tags: Object.keys(tagObj),
         });
