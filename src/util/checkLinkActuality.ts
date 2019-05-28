@@ -19,11 +19,7 @@ export const checkLinkActuality = (path: string): Promise<boolean> => {
                 return resolve(false);
             }
 
-            if (res.statusCode === 404) {
-                return resolve(false);
-            }
-
-            if (res.statusCode !== 200) {
+            if (res.statusCode !== 200 && res.statusCode !== 301 && res.statusCode !== 302) {
                 return reject(res.statusMessage);
             }
 

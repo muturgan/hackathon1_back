@@ -70,7 +70,6 @@ export async function pGetManyImagesPrivate(req: Request, res: Response) {
         const limit = req.query.limit ? +req.query.limit : defaultOptions.limit;
         const offset = req.query.page ? ((+req.query.page - 1) * limit) : (defaultOptions.page - 1) * limit;
         const tag = (req.query.tag && decodeURI(req.query.tag) !== 'all') ? decodeURI(req.query.tag) : null;
-        logger.info('try tags');
 
         const result = await Promise.all([
             knex('images')
