@@ -8,12 +8,13 @@ import { logger } from '../services/logger';
 
 export async function pUpdatePrivatePaths(req: Request, res: Response, next: NextFunction) {
     try {
-        const testPath = (await knex('jsontest')
+        const rows = await knex('jsontest')
             .select('path')
-            .where({id: 1})
-                )[0].path as string;
+            .where({id: 1}) as Array<{path: string}>;
 
-        if (await checkLinkActuality(testPath)) {
+        const testPath = rows.length ? rows[0].path : '';
+
+        if (testPath && await checkLinkActuality(testPath)) {
             return next();
         }
 
