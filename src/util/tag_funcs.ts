@@ -11,7 +11,7 @@ export async function isTaged(tag: string, id: number): Promise<boolean> {
             JSON_CONTAINS(tags, JSON_ARRAY(${escape(tag)}))
             AND id = ${escape(id)}
             LIMIT 1;
-        `) as knexRawSelectResponseType;
+        `) as knexRawSelectResponseType<{id: number}>;
 
         return Boolean(result[0].length);
 

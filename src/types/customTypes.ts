@@ -25,7 +25,7 @@ export type knexSelectInfoType = {
     protocol41: boolean,
 };
 
-export type knexRawSelectResponseType = [any[], knexSelectInfoType[]];
+export type knexRawSelectResponseType<T> = [T[], knexSelectInfoType[]];
 
 export type knexRawUpdateResponseType = [sqlEditRequestType, any|null];
 

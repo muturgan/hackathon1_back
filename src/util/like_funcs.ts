@@ -11,7 +11,7 @@ export async function isVoted(email: string, id: number): Promise<boolean> {
             JSON_CONTAINS(likedUsers, JSON_ARRAY(${escape(email)}))
             AND id = ${escape(id)}
             LIMIT 1;
-        `) as knexRawSelectResponseType;
+        `) as knexRawSelectResponseType<{id: number}>;
 
         return Boolean(result[0].length);
 
